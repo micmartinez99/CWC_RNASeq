@@ -93,7 +93,7 @@ for (i in metabolites) {
 # Convert the list to a dataframe, set column names to metabolites
 delta_values_all <- do.call(cbind, lapply(delta_list, as.data.frame))
 colnames(delta_values_all) <- names(delta_list)
-rownames(delta_values_all) <- uro_delta$patient_id
+rownames(delta_values_all) <- delta$patient_id
 
 # Save as a csv
 write.csv(delta_values_all, file = "Outputs/001_Tidy_Urolithins/All_Delta_Values.csv")
