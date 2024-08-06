@@ -85,6 +85,11 @@ These 9 files contain 5 columns (sample id, patient id, visit_2 and visit 3 quan
 # Put together a cohesive dataframe that holds all 9 urolithin delta values to stratify by
 This output file is called "All_Delta_Files.csv" and is in the "Outputs/001_Tidy_Urolithins/ subdirectory"
 
+# Script 002_GMM_Classification.R
+This script will classify the samples based on their profile of delta values for the 9 metabolites.
+First, a PCA/biplot analysis will be conducted to determine how to best stratify the values.
+Originally in our first walnut publication, we stratified solely based on urolithin A delta values
+144.4, 2,792.1, and 20,656.2 ng/mg (low, medium, and high median values respectively.)
 
 
 

@@ -69,12 +69,12 @@ ggsave("Outputs/002_GMM_Classification/Urolithin_Delta_Biplot.png", biplot, widt
 
 ################################################################################
 
-# Cluster data based on full urolithin delta profile
+# Parameter testing
 
 # Set seed for reproducibilit
 set.seed(03061999)
 
-# Fi the GMM model
+# Fit the GMM model based on only urolithin A with 3 groups
 gmm_all <- Mclust(deltas[,c(2)], G = 2)
 summary(gmm_all)
 
@@ -89,20 +89,27 @@ plot(gmm_all, what = "classification")
 # Extract PCA scores
 scores <- as.data.frame(pca_res$x)
 scores$Group <- classifications
+scores$Group <- factor(scores$Group, levels = c(1,2))
 scores$Group <- ifelse(scores$Group == 1, "Low", "High")
 scores$Group <- factor(scores$Group, levels = c("Low", "High"))
+scores$patient_id <- rownames(pca_res[["x"]])
 
 
 # Plot PCA colored by groupings
-ggplot(scores, aes(x = PC1, y = PC2, color= Group)) +
+groupPCA <- ggplot(scores, aes(x = PC1, y = PC2, color = Group, label = patient_id)) +
   geom_point() +
+  geom_text_repel() +
   labs(y = "PC2 (18.2% explained var.)",
-       x = "PC1 (38.0% explained var.)") +
+       x = "PC1 (38.0% explained var.)",
+       color = "") +
   theme_classic() +
   theme(axis.title.x = element_text(face = "bold", size = 20),
         axis.text.x = element_text(size = 16),
         axis.title.y = element_text(face = "bold", size = 20),
-        axis.text.y = element_text(size = 16))
+        axis.text.y = element_text(size = 16),
+        legend.position = "bottom",
+        legend.text = element_text(face = "bold", size = 20))
+ggsave("Outputs/002_GMM_Classification/GMM_Stratification_2Group_dUroA.png", groupPCA, width = 8, height = 8)
   
 
 # Compute the median values for each group
